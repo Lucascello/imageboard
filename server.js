@@ -4,9 +4,36 @@ const app = express();
 
 const db = require("./db");
 
+const { uploader } = require("./upload");
+
+const s3 = require("./s3");
+
 app.use(express.static("./public"));
 
 app.use(express.json());
+
+app.post("/upload", uploader.single("file"), s3.upload, function (req, res) {
+    // If nothing went wrong the file is already in the uploads directory
+    if (req.file) {
+        console.log("This Is My File: ", req.file);
+        console.log("This is my Requsted Body: ", req.body);
+
+        const { username, title, description } = req.body;
+        const url = `https://spicedling.s3.amazonaws.com/${req.file.filename}`;
+
+        db.addImages(url, username, title, description)
+            .then(({ rows }) => {
+                res.json({ success: true, image: rows[0] });
+            })
+            .catch((error) => {
+                console.log("Error In Adding Images: ", error);
+            });
+    } else {
+        res.json({
+            success: false,
+        });
+    }
+});
 
 app.get("/get-images-data", (req, res) => {
     db.selectImages()

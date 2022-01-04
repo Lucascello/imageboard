@@ -5,22 +5,34 @@
     <title>My Imageboard</title>
     <link rel="stylesheet" href="/style.css">
 </head>
-<body>
+<body id="main">
 
-    <div id="main">
-        <h1>My Imageboard</h1>
-        <h2>These Are The Latest Images</h2>
+    <header class="top">
+        <h1 class="head">Image Bored 🥱</h1>
+        <h2 class="head">A Fun Place For Boring Times</h2>
+        <br>    
+
+        <form>
+            <input v-model="title" class="input" type="text" name="title" placeholder="Title">
+            <input v-model="username" class="input" type="text" name="username" placeholder="Username">
+            <input v-model="description" class="input" type="text" name="description" placeholder="Description">
+            <input @change="fileSelectHandler" class="file" type="file" name="file" accept="image/*" ref="upload">
+            <button @click.prevent="clickHandler">Upload</button>
+        </form>
+    
+    </header>
+    
+    <main>
         <div class="images">
-            <ul v-if="images.length > 0">
-                <li v-for='image in images' >
-                <img :src="image.url"/> 
-                <figcaption>{{image.title}} </figcaption>
-                </li>
-            </ul>
-        </div>
-        
-    </div>
-
+                <ul v-if="images.length > 0">
+                    <li v-for='image in images' >
+                    <img :src="image.url"/> 
+                    <figcaption>{{image.title}} </figcaption>
+                    </li>
+                </ul>
+            </div>
+    </main>
+    
     <footer> © Lucas Ebert 2022.</footer>
 
     <script src="/js/app.js" type="module" crossorigin="use-credentials"></script>

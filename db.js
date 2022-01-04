@@ -12,12 +12,12 @@ console.log(`[db] connecting to:${database}`);
 module.exports.addImages = (url, username, title, description) => {
     const q = `INSERT INTO images (url, username, title, description)
                 VALUES ($1, $2, $3, $4)
-                RETURNING id`;
+                RETURNING url, username, title, description`;
     const params = [url, username, title, description];
     return db.query(q, params);
 };
 
 module.exports.selectImages = () => {
-    const q = "SELECT * FROM images";
+    const q = "SELECT * FROM images ORDER BY id DESC";
     return db.query(q);
 };
