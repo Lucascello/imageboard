@@ -1,5 +1,7 @@
 import * as Vue from "./vue.js";
 
+import firstComponent from "./firstComponent.js";
+
 Vue.createApp({
     data() {
         return {
@@ -8,6 +10,7 @@ Vue.createApp({
             description: "",
             username: "",
             file: null,
+            imageSelected: false,
         };
     },
     mounted() {
@@ -16,6 +19,9 @@ Vue.createApp({
             .then((data) => {
                 this.images = data;
             });
+    },
+    components: {
+        "first-component": firstComponent,
     },
     methods: {
         clickHandler: function () {
@@ -43,6 +49,17 @@ Vue.createApp({
         },
         fileSelectHandler: function (e) {
             this.file = e.target.files[0];
+        },
+        selectImage(clickedImage) {
+            console.log("User Clicked On A Image: ", clickedImage);
+            console.log("************");
+            console.log("What's this in selectImage:", this);
+            console.log("************");
+            console.log("What's event.target: ", event.target);
+            this.imageSelected = clickedImage;
+        },
+        closeTemplate: function () {
+            this.imageSelected = false;
         },
     },
 }).mount("#main");

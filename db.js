@@ -21,3 +21,8 @@ module.exports.selectImages = () => {
     const q = "SELECT * FROM images ORDER BY id DESC";
     return db.query(q);
 };
+
+module.exports.getImageInfo = (id) => {
+    const q = "SELECT * FROM images WHERE id=$1";
+    return db.query(q, [id]);
+};

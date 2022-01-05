@@ -8,6 +8,8 @@ const { uploader } = require("./upload");
 
 const s3 = require("./s3");
 
+const moment = require("moment");
+
 app.use(express.static("./public"));
 
 app.use(express.json());
@@ -43,6 +45,23 @@ app.get("/get-images-data", (req, res) => {
         })
         .catch((err) => {
             console.log("error in selectImages: ", err);
+        });
+});
+
+app.get("/get-image-info/:imageId", (req, res) => {
+    console.log(req.params);
+
+    const date = new Date();
+
+    db.getImageInfo(req.params.imageId)
+        .then(({ rows }) => {
+            console.log("imageInfo rows: ", rows);
+            moment(date).format("MMM Do YY");
+            console.log(moment(date).format("MMM Do YY"));
+            res.json(rows);
+        })
+        .catch((err) => {
+            console.log("error in getImageInfo: ", err);
         });
 });
 

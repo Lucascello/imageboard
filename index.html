@@ -8,8 +8,8 @@
 <body id="main">
 
     <header class="top">
-        <h1 class="head">Image Bored 🥱</h1>
-        <h2 class="head">Adding Fun Pictures To Boring Times</h2>
+        <h1 class="title">Image-Bored 🥱</h1>
+        <h2 class="subtitle">Adding Fun Pictures To Boring Times</h2>
         <br>    
 
         <form>
@@ -21,11 +21,21 @@
         </form>
     
     </header>
-    
+
+    <!-- adding our first component -->
+    <first-component v-if="imageSelected" :image-id="imageSelected" class="component" @close="closeTemplate"></first-component>
+    <!-- end of first component -->
+
+    <!-- <div class="image-container">
+        <h1 v-for="image in images" @click="selectImage(image.id)">
+            {{image.id}} || {{image.title}}
+        </h1>
+    </div> -->
+
     <main>
         <div class="images">
                 <ul v-if="images.length > 0">
-                    <li v-for='image in images' >
+                    <li v-for="image in images" @click="selectImage(image.id)">
                     <img :src="image.url"/> 
                     <figcaption>{{image.title}} </figcaption>
                     </li>
@@ -33,7 +43,9 @@
             </div>
     </main>
     
-    <footer> © Lucas Ebert 2022.</footer>
+    <footer> 
+        <div>© Lucas Ebert - Jan. 2022</div>
+    </footer>
 
     <script src="/js/app.js" type="module" crossorigin="use-credentials"></script>
 </body>
