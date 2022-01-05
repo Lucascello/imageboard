@@ -40,7 +40,7 @@ app.post("/upload", uploader.single("file"), s3.upload, function (req, res) {
 app.get("/get-images-data", (req, res) => {
     db.selectImages()
         .then(({ rows }) => {
-            console.log("image rows: ", rows);
+            console.log("imageData rows: ", rows);
             res.json(rows);
         })
         .catch((err) => {
@@ -49,15 +49,21 @@ app.get("/get-images-data", (req, res) => {
 });
 
 app.get("/get-image-info/:imageId", (req, res) => {
-    console.log(req.params);
+    console.log("My req.params in image: ", req.params);
 
-    const date = new Date();
+    const date = moment().format("MMMM Do YYYY, h:mm:ss a");
 
     db.getImageInfo(req.params.imageId)
         .then(({ rows }) => {
             console.log("imageInfo rows: ", rows);
-            moment(date).format("MMM Do YY");
-            console.log(moment(date).format("MMM Do YY"));
+            console.log(
+                "This is the date in a better format: ",
+                moment().format("MMMM Do YYYY, h:mm:ss a")
+            );
+            rows.forEach(function (row) {
+                row.created_at = date;
+                console.log("My updated Date: ", row.created_at);
+            });
             res.json(rows);
         })
         .catch((err) => {

@@ -14,6 +14,7 @@ const firstComponent = {
             .then((data) => {
                 console.log("Whats's my data in the component: ", data[0]);
                 this.image = data[0];
+                
             });
     },
     methods: {
