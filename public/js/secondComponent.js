@@ -3,7 +3,7 @@ const secondComponent = {
         return {
             heading: "Write A Comment",
             subheading: "See All Comments",
-            comment: [],
+            comments: [],
             comment: "",
             username: "",
         };
@@ -15,7 +15,7 @@ const secondComponent = {
             .then((resp) => resp.json())
             .then((data) => {
                 console.log("Whats's my data in the second component: ", data);
-                this.comment = data;
+                this.comment = data[0];
             });
     },
     methods: {
@@ -38,7 +38,11 @@ const secondComponent = {
                         "What's this.comment in fetch comments upload: ",
                         this.comment
                     );
-                    this.comment.unshift(...data);
+                    console.log(
+                        "What's comments in fetch comments upload: ",
+                        this.comments
+                    );
+                    this.comments.unshift(...data);
                     console.log("What's data now in comments upload: ", data);
                 });
         },
@@ -56,11 +60,10 @@ const secondComponent = {
         <div>
         <br><br>
         <h2>{{subheading}}</h2>
-        <div v-for="info in comments">
-                    <h3> Comment - {{info.comment}}
-                    <br><br>
-                    </h3>
-                    <h4> Written By {{info.username}} on {{info.created_at}} </h4>
+        <div v-for="comment in comments">
+                    <h3> Comment - {{this.comment}}
+                    </h4>
+                    <h4> Written By {{this.username}} on {{this.created_at}} </h4>
                 </div>
         </div>
     

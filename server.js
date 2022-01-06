@@ -38,12 +38,21 @@ app.post("/upload", uploader.single("file"), s3.upload, function (req, res) {
 });
 
 app.post("/comments.json", function (req, res) {
-    const { img_id, username, comment } = req.body;
+    const { img_id, username, comment, created_at } = req.body;
 
-    db.addComments(img_id, username, comment)
-        .then((data) => {
-            console.log("These Are My Comment Rows: ", data.rows);
-            res.json(data.rows);
+    db.addComments(img_id, username, comment, created_at)
+        .then(({ rows }) => {
+            console.log("These Are My Comment Rows: ", rows);
+            rows.forEach(function (row) {
+                row.created_at = moment(row.created_at).format(
+                    "MMMM Do YYYY, h:mm:ss a"
+                );
+                console.log(
+                    "My updated Date in post comments: ",
+                    row.created_at
+                );
+            });
+            res.json(rows);
         })
         .catch((error) => {
             console.log("Error In Adding Comments: ", error);
