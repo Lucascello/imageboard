@@ -51,8 +51,6 @@ app.get("/get-images-data", (req, res) => {
 app.get("/get-image-info/:imageId", (req, res) => {
     console.log("My req.params in image: ", req.params);
 
-    const date = moment().format("MMMM Do YYYY, h:mm:ss a");
-
     db.getImageInfo(req.params.imageId)
         .then(({ rows }) => {
             console.log("imageInfo rows: ", rows);
@@ -61,7 +59,9 @@ app.get("/get-image-info/:imageId", (req, res) => {
                 moment().format("MMMM Do YYYY, h:mm:ss a")
             );
             rows.forEach(function (row) {
-                row.created_at = date;
+                row.created_at = moment(row.created_at).format(
+                    "MMMM Do YYYY, h:mm:ss a"
+                );
                 console.log("My updated Date: ", row.created_at);
             });
             res.json(rows);
