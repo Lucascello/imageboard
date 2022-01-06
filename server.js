@@ -37,10 +37,36 @@ app.post("/upload", uploader.single("file"), s3.upload, function (req, res) {
     }
 });
 
+app.post("/comments.json", function (req, res) {
+    const { img_id, username, comment } = req.body;
+
+    db.addComments(img_id, username, comment)
+        .then((data) => {
+            console.log("These Are My Comment Rows: ", data.rows);
+            res.json(data.rows);
+        })
+        .catch((error) => {
+            console.log("Error In Adding Comments: ", error);
+        });
+});
+
 app.get("/get-images-data", (req, res) => {
     db.selectImages()
         .then(({ rows }) => {
             console.log("imageData rows: ", rows);
+            res.json(rows);
+        })
+        .catch((err) => {
+            console.log("error in selectImages: ", err);
+        });
+});
+
+app.get("/get-images-data/:lowestId", (req, res) => {
+    console.log("My req.params to get more images: ", req.params);
+
+    db.selectMoreImages(req.params.lowestId)
+        .then(({ rows }) => {
+            console.log("imageData rows to add more images: ", rows);
             res.json(rows);
         })
         .catch((err) => {
@@ -68,6 +94,32 @@ app.get("/get-image-info/:imageId", (req, res) => {
         })
         .catch((err) => {
             console.log("error in getImageInfo: ", err);
+        });
+});
+
+app.get("/get-comment-info/:imageId.json", (req, res) => {
+    console.log("My req.params in comments: ", req.params);
+
+    db.selectComments(req.params.imageId)
+        .then(({ rows }) => {
+            console.log("Comment Info rows: ", rows);
+            console.log(
+                "This is the date for the comments in a better format: ",
+                moment().format("MMMM Do YYYY, h:mm:ss a")
+            );
+            rows.forEach(function (row) {
+                row.created_at = moment(row.created_at).format(
+                    "MMMM Do YYYY, h:mm:ss a"
+                );
+                console.log(
+                    "My updated Date in the comments: ",
+                    row.created_at
+                );
+            });
+            res.json(rows);
+        })
+        .catch((err) => {
+            console.log("error in selectComments: ", err);
         });
 });
 

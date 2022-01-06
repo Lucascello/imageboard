@@ -11,6 +11,7 @@ Vue.createApp({
             username: "",
             file: null,
             imageSelected: false,
+            showMore: true,
         };
     },
     mounted() {
@@ -45,6 +46,23 @@ Vue.createApp({
                 })
                 .catch((err) => {
                     console.log("error uploading new image: ", err);
+                });
+        },
+        addMore: function () {
+            const latsImage = this.images[this.images.length - 1].id;
+            console.log("This is my last image showing: ", latsImage);
+            console.log("This is my lowestId: ", this.images);
+            fetch(`/get-images-data/${latsImage}`)
+                .then((resp) => resp.json())
+                .then((data) => {
+                    console.log("What's the new data", this.images);
+                    if (
+                        data[data.length - 1].id ===
+                        data[data.length - 1].lowestid
+                    ) {
+                        this.showMore = false;
+                    }
+                    this.images.push(...data);
                 });
         },
         fileSelectHandler: function (e) {

@@ -26,22 +26,23 @@
     <first-component v-if="imageSelected" :image-id="imageSelected" class="component" @close="closeTemplate"></first-component>
     <!-- end of first component -->
 
-    <!-- <div class="image-container">
-        <h1 v-for="image in images" @click="selectImage(image.id)">
-            {{image.id}} || {{image.title}}
-        </h1>
-    </div> -->
 
     <main>
         <div class="images">
-                <ul v-if="images.length > 0">
-                    <li v-for="image in images" @click="selectImage(image.id)">
-                    <img :src="image.url"/> 
-                    <figcaption>{{image.title}} </figcaption>
-                    </li>
-                </ul>
-            </div>
+            <ul v-if="images.length > 0">
+                <li v-for="image in images" @click="selectImage(image.id)" :key="image.id">
+                <img :src="image.url" /> 
+                <figcaption>{{image.title}} </figcaption>
+                </li>
+            </ul>
+
+           <div class="more">
+               <button v-if="showMore" @click.prevent="addMore" >MORE PICS</button></div> 
+        </div>
+
     </main>
+
+
     
     <footer> 
         <div>© Lucas Ebert - Jan. 2022</div>
