@@ -15,7 +15,7 @@ const secondComponent = {
             .then((resp) => resp.json())
             .then((data) => {
                 console.log("Whats's my data in the second component: ", data);
-                this.comment = data[0];
+                this.comments = data;
             });
     },
     methods: {
@@ -25,7 +25,7 @@ const secondComponent = {
                 body: JSON.stringify({
                     comment: this.comment,
                     username: this.username,
-                    img_id: this.imgId,
+                    img_id: this.imageId,
                 }),
                 headers: {
                     Accept: "application/json",
@@ -42,7 +42,7 @@ const secondComponent = {
                         "What's comments in fetch comments upload: ",
                         this.comments
                     );
-                    this.comments.unshift(...data);
+                    this.comments.unshift(data);
                     console.log("What's data now in comments upload: ", data);
                 });
         },
@@ -60,10 +60,14 @@ const secondComponent = {
         <div>
         <br><br>
         <h2>{{subheading}}</h2>
+        <br>
         <div v-for="comment in comments">
-                    <h3> Comment - {{this.comment}}
+                    <br>
+                    <h3> Comment - {{comment.comment}}
                     </h4>
-                    <h4> Written By {{this.username}} on {{this.created_at}} </h4>
+                    <h4> Written By {{comment.username}} on {{comment.created_at}} </h4>
+                    <br>
+                <hr>
                 </div>
         </div>
     

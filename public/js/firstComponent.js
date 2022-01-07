@@ -37,7 +37,7 @@ const firstComponent = {
                     <br><br>
                     <button @click="notifyParent" class="close"> Return To Pics</button>
                     
-                    <second-component></second-component>
+                    <second-component :image-id="imageId"></second-component>
 
                 </div>`,
 };

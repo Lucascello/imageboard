@@ -146,12 +146,12 @@ li {
     padding: 3rem;
 }
 
-/* .secondcomponent {
+.secondcomponent {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-content: center;
-} */
+}
 
 footer {
     display: flex;

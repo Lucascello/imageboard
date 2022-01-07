@@ -39,6 +39,7 @@ app.post("/upload", uploader.single("file"), s3.upload, function (req, res) {
 
 app.post("/comments.json", function (req, res) {
     const { img_id, username, comment, created_at } = req.body;
+    console.log("THIS IS REQ.BODY POST VCOMMNETS,", req.body);
 
     db.addComments(img_id, username, comment, created_at)
         .then(({ rows }) => {
