@@ -42,7 +42,7 @@ const secondComponent = {
                         "What's comments in fetch comments upload: ",
                         this.comments
                     );
-                    this.comments.unshift(data);
+                    this.comments.unshift(data.comment);
                     console.log("What's data now in comments upload: ", data);
                 });
         },

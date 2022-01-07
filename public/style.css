@@ -135,8 +135,11 @@ ul {
 li {
     background-color: #495057;
     padding: 10px;
-    align-self: flex-start;
+    /* align-self: flex-start; */
     justify-self: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .more {
