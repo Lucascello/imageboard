@@ -34,15 +34,16 @@ const secondComponent = {
             })
                 .then((res) => res.json())
                 .then((data) => {
-                    console.log(
-                        "What's this.comment in fetch comments upload: ",
-                        this.comment
-                    );
-                    console.log(
-                        "What's comments in fetch comments upload: ",
-                        this.comments
-                    );
-                    this.comments.unshift(data.comment);
+                    // console.log("My Data post: ", data);
+                    // console.log(
+                    //     "What's this.comment in fetch comments upload: ",
+                    //     this.comment
+                    // );
+                    // console.log(
+                    //     "What's comments in fetch comments upload: ",
+                    //     this.comments
+                    // );
+                    this.comments.unshift(data[0]);
                     console.log("What's data now in comments upload: ", data);
                 });
         },
